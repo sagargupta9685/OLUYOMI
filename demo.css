@@ -35,91 +35,251 @@
 }
 
 /* Projects Section */
+/* =======================================
+   Base Styles for Projects Section
+   ======================================= */
+
 .projects-section {
-    padding: 20px 0;
+    padding: 60px 0;
+    /* Add vertical padding */
+    background-color: #f8f8f8;
+    /* Light background for the section */
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    /* Limit the container width */
+    margin: 0 auto;
+    /* Center the container */
+    padding: 0 15px;
+    /* Horizontal padding */
+}
+
+.section-title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .section-subtitle {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #7f8c8d;
-    max-width: 700px;
-    margin: 0 auto 40px;
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 40px;
 }
 
-/* Projects Grid */
+/* =======================================
+   Projects Grid and Card Styles
+   ======================================= */
+
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    /* Create a responsive grid: 3 columns on large screens */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    /* Spacing between grid items */
 }
 
-/* Project Card */
 .project-card {
+    /* Set a fixed aspect ratio or height for uniformity */
+    height: 300px;
     position: relative;
-    height: 280px;
-    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* Crucial for clipping the full-width/height image */
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-size: cover;
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+
+    /* The background image (set via inline style in HTML) will be styled here */
+    background-size: contain;
+    /* **Makes the image cover the entire card** */
     background-position: center;
+    /* Centers the image within the card */
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease-in-out;
 }
 
-.project-card::before {
-    content: '';
+.project-card:hover {
+    transform: translateY(-5px);
+    /* Lift card on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Dark overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.project-card:hover::before {
-    opacity: 1;
+    /* Initially hidden */
+    transition: opacity 0.3s ease-in-out;
+    padding: 20px;
 }
 
 .project-card:hover .overlay {
     opacity: 1;
-    transform: translateY(0);
-}
-
-/* Project Overlay */
-.overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    color: white;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-    z-index: 2;
+    /* Show overlay on hover */
 }
 
 .overlay h3 {
-    font-size: 1.4rem;
-    margin-bottom: 8px;
-    font-weight: 600;
+    color: #fff;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
 .overlay span {
-    display: inline-block;
-    background: rgba(52, 152, 219, 0.8);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
+    color: #ffcc00;
+    /* Highlight color for technology */
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* =======================================
+   Modal Styles (Full-Screen Image/Detail Display)
+   ======================================= */
+
+.modal {
+    /* Initial state: Hidden and fixed position for full screen */
+    display: none;
+    /* Hidden by default (JavaScript will change this) */
+    position: fixed;
+    z-index: 1000;
+    /* Ensure it's on top of everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Dark, semi-transparent background */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    /* Center the modal content vertically and horizontally */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Width of the detail box */
+    max-width: 900px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Modal Image Specifics: This will contain the full image */
+.modal-image {
+    /* If you load a direct <img> tag here, use these styles */
+    max-width: 100%;
+    max-height: 500px;
+    /* Control max height for large images */
+    margin: 20px auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+.modal-image img {
+    /* Ensures the actual image inside the div is responsive */
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    display: block;
+    /* Remove extra space below the image */
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+/* Example styles for the rest of the modal for completeness */
+.modal-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-tech {
+    display: block;
+    color: #007bff;
+    font-weight: 600;
+}
+
+.modal-features h4 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.modal-features ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.modal-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* =======================================
+   Media Query for smaller screens
+   ======================================= */
+
+@media (max-width: 768px) {
+    .projects-grid {
+        /* On smaller screens, use 1 or 2 columns */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .modal-content {
+        width: 95%;
+        /* Make modal wider on small screens */
+        margin: 10% auto;
+    }
 }
 
 /* Modal Styles */
